@@ -2,18 +2,23 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+  # Use flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
- 
+  boot.loader.grub.enable = true;
+  boot.loader.grub.devices = ["nodev"];
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -35,10 +40,17 @@
    #  useXkbConfig = true; # use xkb.options in tty.
    };
 
+   fonts.packages = with pkgs; [
+     noto-fonts
+     noto-fonts-emoji
+     fira-code
+     nerd-fonts.jetbrains-mono
+   ];
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-   services.displayManager.gdm.enable = true;
-   services.displayManager.gdm.wayland = true;
+   services.displayManager.sddm.enable = true;
+   services.displayManager.sddm.wayland.enable = true;
    services.displayManager.defaultSession = "hyprland";
 
      
@@ -63,26 +75,32 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.anan = {
      isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
-       tree
-       kitty
-     ];
+     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user. 
    };
+
+   programs.zsh.enable = true;
+   users.defaultUserShell = pkgs.zsh;
 
   # programs.firefox.enable = true;
 
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
-     hyprland
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+     vim 
      wget
      kitty
      firefox
      git
+     waybar
      neovim
+     tmux
+     pamixer
+     pipewire
+     wireplumber
+     xdg-desktop-portal
+     pulseaudio
      xdg-desktop-portal-hyprland
+     brightnessctl
    ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -104,15 +122,33 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # windows manager
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+  };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    configPackages = [ pkgs.hyprland ];
+  };
+
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    pulse.enable = true;
+    jack.enable = true;
+
+    # Este backend es necesario para que funcione con WirePlumber
+    alsa.enable = true;
+    alsa.support32Bit = true;
+  };
+
   programs.hyprlock.enable = true;
-  # programs.xwayland.enable = true;
+  programs.xwayland.enable = true;
   services.power-profiles-daemon.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  virtualisation.virtualbox.guest.enable = true; 
-  virtualisation.virtualbox.host.enable = true; 
-  virtualisation.virtualbox.host.enableExtensionPack = true; 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
