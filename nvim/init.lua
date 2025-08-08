@@ -1,0 +1,8 @@
+require("config.lazy")
+require("colors")
+require("treesitter")
+require("lsp")
+require("keymap")
+require("nvimtree")
+require("blankline")
+require("conf")
