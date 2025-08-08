@@ -195,8 +195,16 @@
     hyprpaper
     grimblast
     waybar
+    grim
+    slurp
     xdg-desktop-portal
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-wlr
     brightnessctl
   ];
+
+  services.flameshot = {
+    enable = true;
+    settings.General = { showStartupLaunchMessage = false; };
+  };
 }
