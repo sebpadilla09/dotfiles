@@ -17,8 +17,8 @@
         ./configuration.nix
         home-manager.nixosModules.home-manager
         {
-          home-manager.users.anan = (import ./home.nix);
-	  home-manager.backupFileExtension = "backup";
+          home-manager.users.anan = (import ./profiles-modules/anan-home.nix);
+          home-manager.backupFileExtension = "backup";
         }
       ];
     };
