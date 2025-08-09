@@ -4,6 +4,7 @@
   imports = [
     ../home-modules/hyprland.nix
     ../home-modules/development-tools.nix
+    ../home-modules/zsh.nix
   ];
 
 
