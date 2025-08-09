@@ -7,7 +7,7 @@
     # La sintaxis es la misma que la de un archivo hyprland.conf, pero usando Nix.
     settings = {
       #Programs variables
-      "$terminal" = "kitty";
+      "$terminal" = "alacritty";
       "$fileManager" = "dolphin";
       "$menu" = "wofi --show drun";
       "$browser" = "firefox";
@@ -35,8 +35,8 @@
         gaps_out = 10;
 	    border_size = 2;
 
-	    "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-	    "col.inactive_border" = "rgba(595959aa)";
+	    "col.active_border" = "0xffcba6f7";
+	    "col.inactive_border" = "0xff313244";
 
 	    resize_on_border = false;
 	    allow_tearing = false;
@@ -189,6 +189,7 @@
   # Los paquetes que solo necesitas para Hyprland
   home.packages = with pkgs; [
     kitty
+    alacritty
     firefox
     wofi
     sway
