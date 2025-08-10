@@ -24,3 +24,4 @@ vim.keymap.set("n", "<leader>ft", ":TodoTelescope<return>")
 
 -- Terminal
 vim.keymap.set("n", "<leader>t", ":ToggleTerm<return>")
+vim.keymap.set("t", "<ESC>", "<C-\\><C-n>", { noremap = true, silent = true })
