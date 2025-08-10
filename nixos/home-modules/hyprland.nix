@@ -48,8 +48,8 @@
 	    rounding_power = 2;
 
 	    # transparency
-	    active_opacity = 1.0;
-	    inactive_opacity = 1.0;
+	    active_opacity = 0.74;
+	    inactive_opacity = 0.74;
         
 	    shadow = {
 	      enabled = true;
@@ -163,6 +163,7 @@
         "$mod SHIFT, 8, movetoworkspace, 8"
         "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
+        "$mod, Print, exec, grim -g '$(slurp)'"
       ];
 
       bindel = [
@@ -181,6 +182,8 @@
       windowrule = [
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+        "opacity 1.0 override 1.0 override, class:firefox"
+        "workspace 3, class:firefox"
       ];
  
     };
@@ -198,14 +201,11 @@
     waybar
     grim
     slurp
+    wl-clipboard
     xdg-desktop-portal
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-wlr
     brightnessctl
   ];
-
-  services.flameshot = {
-    enable = true;
-    settings.General = { showStartupLaunchMessage = false; };
-  };
+ 
 }
