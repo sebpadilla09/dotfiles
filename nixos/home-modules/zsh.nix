@@ -22,6 +22,7 @@
       {
         name = "zsh-autosuggestions";
         src = pkgs.zsh-autosuggestions;
+        file = "share/zsh-autosuggestions/zsh-autosuggestions.zsh";
       }
       {
         name = "powerlevel10k";
