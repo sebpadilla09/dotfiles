@@ -30,7 +30,7 @@ This repository contains **the full configuration** of my system, designed to be
 | `SUPER + B`      | Open web browser  |
 
 ## 📷 Screenshots
-![Current Appearance](./assets/current_appaerance.png)
+![Current Appearance](./assets/current_appearance.png)
 
 ---
 
